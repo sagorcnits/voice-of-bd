@@ -1,4 +1,5 @@
-import Header from "@/components/navbar";
+import Header from "@/components/header";
+import Navbar from "@/components/navbar";
 
 export default function Layout({
   children,
@@ -6,11 +7,13 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      <Header />
-      {/* <Navbar /> */}
+    <main>
+      <section className="container mx-auto">
+        <Header />
+        <Navbar />
+      </section>
       {children}
       {/* <Footer/> */}
-    </div>
+    </main>
   );
 }
