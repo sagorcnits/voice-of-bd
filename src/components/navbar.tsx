@@ -40,7 +40,9 @@ const Navbar = () => {
         ))}
       </ul>
 
-      <button className="px-7">Login</button>
+      <Link href="/login">
+        <button className="px-7">Login</button>
+      </Link>
     </nav>
   );
 };
