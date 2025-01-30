@@ -10,14 +10,16 @@ interface LinkType {
 
 // Define the navigation items
 const navItems: LinkType[] = [
-  { name: "Home", href: "/" },
-  { name: "Blog", href: "/blog" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "New", href: "/" },
-  { name: "Play", href: "/blog" },
-  { name: "History", href: "/about" },
-  { name: "Islam", href: "/contact" },
+  { name: "সর্বশেষ", href: "/" },
+  { name: "জাতীয়", href: "/national" },
+  { name: "রাজনীতি", href: "/political" },
+  { name: "অর্থনীতি", href: "/contact" },
+  { name: "সারা দেশ", href: "/bangladesh" },
+  { name: "বিশ্ব", href: "/world" },
+  { name: "খেলা", href: "/game" },
+  { name: "জুলাই বিপ্লব", href: "/biplob" },
+  { name: "ধর্ম ও ইসলাম", href: "/religion" },
+  { name: "বিনোদন", href: "/entertainemnt" },
 ];
 
 const Navbar = () => {
