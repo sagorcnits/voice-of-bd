@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="container mx-auto  py-5 border-b">
+    <header className="py-5 border-b">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-bold text-3xl">

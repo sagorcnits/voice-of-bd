@@ -23,8 +23,8 @@ const navItems: LinkType[] = [
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <nav className="py-5 border-b flex justify-between items-center">
-      <ul className="flex gap-6 items-center font-semibold text-lg">
+    <nav className="py-5 border-b flex justify-between items-center overflow-auto w-full">
+      <ul className="flex  gap-6 items-center font-semibold text-lg">
         {navItems.map((item: LinkType, id: number) => (
           <Link
             className={`${pathname == item.href ? "text-[#EE1B24]" : ""}`}

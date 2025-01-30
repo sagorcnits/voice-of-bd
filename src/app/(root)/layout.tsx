@@ -8,7 +8,7 @@ export default function Layout({
 }>) {
   return (
     <main>
-      <section className="container mx-auto">
+      <section className="container mx-auto px-4 xl:px-0">
         <Header />
         <Navbar />
       </section>
