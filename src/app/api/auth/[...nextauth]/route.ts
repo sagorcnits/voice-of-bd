@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+export const authOptions = {
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as "jwt",
   },
   providers: [
     CredentialsProvider({
@@ -14,13 +14,15 @@ const handler = NextAuth({
       async authorize(credentials) {
         // Add your authorization logic here
         if (credentials) {
-          return true;
+          return { id: "1", name: credentials.username };
         } else {
           return null;
         }
       },
     }),
   ],
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
