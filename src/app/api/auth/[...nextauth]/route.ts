@@ -8,19 +8,40 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        email: {},
+        password: {},
       },
       async authorize(credentials) {
-        // Add your authorization logic here
-        if (credentials) {
-          return { id: "1", name: credentials.username };
-        } else {
+        if (!credentials) {
+          return null as any;
+        }
+        const { email, password } = credentials;
+        if (!email || !password) {
           return null;
         }
       },
     }),
   ],
+
+  callbacks: {
+    async jwt({ token, user, account }: any) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+      }
+      return token;
+    },
+
+    async session({ session, user, token }: any) {
+      session.user.id = token.id;
+      session.user.name = token.name;
+      return session;
+    },
+  },
+
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);

@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -26,6 +26,7 @@ const navItems: LinkType[] = [
 const Navbar = () => {
   const pathname = usePathname();
   const session = useSession();
+  console.log(session);
   return (
     <nav className="py-5 border-b flex justify-between items-center overflow-auto w-full ">
       <ul className="flex  gap-6 items-center font-semibold text-lg">
@@ -42,11 +43,17 @@ const Navbar = () => {
         ))}
       </ul>
       {session.status === "authenticated" ? (
-        <Link href="/login">
-          <button className="px-7">Logout</button>
-        </Link>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            signOut();
+          }}
+          className="px-7"
+        >
+          Logout
+        </button>
       ) : (
-        <Link href="/login">
+        <Link href="/api/auth/signin">
           <button className="px-7">Login</button>
         </Link>
       )}
