@@ -12,11 +12,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { registerFormSchema } from "@/lib/formValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
 
 const RegisterForm = () => {
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
@@ -29,13 +33,28 @@ const RegisterForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof registerFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    axios
+      .post("/api/users", { ...values, role: "user" })
+      .then((res) => {
+        if (res.data.message == "success") {
+          toast.success("Registration successful");
+          form.reset();
+          setTimeout(() => {
+            router.push("/login");
+          }, 2000);
+        }
+        if (res.data.message == "Email already exists") {
+          toast.error("Email already exists");
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   return (
     <Form {...form}>
+      <ToastContainer />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}

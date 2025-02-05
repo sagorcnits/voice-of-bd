@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       );
     const newUser = new users(data);
     await newUser.save();
-    return NextResponse.json({ message: "User created" }, { status: 201 });
+    return NextResponse.json({ message: "success" }, { status: 201 });
   } catch (error) {
     console.log(error);
   }
