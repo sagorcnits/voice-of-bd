@@ -12,6 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginFormSchema } from "@/lib/formValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,10 +28,18 @@ const LoginForm = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
+  async function onSubmit(values: z.infer<typeof loginFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+
+    const response = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+
+    console.log(response);
   }
 
   return (
