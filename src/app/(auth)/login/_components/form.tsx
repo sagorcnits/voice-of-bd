@@ -14,10 +14,12 @@ import { loginFormSchema } from "@/lib/formValidationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const LoginForm = () => {
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
@@ -38,7 +40,9 @@ const LoginForm = () => {
       password: values.password,
       redirect: false,
     });
-
+    if (response?.ok) {
+      router.push("/");
+    }
     console.log(response);
   }
 

@@ -4,8 +4,10 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
+  secret: process.env.SECRET_KEY,
   session: {
     strategy: "jwt" as "jwt",
+    maxAge: 30 * 24 * 60 * 60,
   },
   providers: [
     CredentialsProvider({
@@ -41,7 +43,7 @@ export const authOptions = {
       if (user) {
         token.name = user.name;
         token.email = user.email;
-        token.type = user.type;
+        token.role = user.role;
       }
       return token;
     },
@@ -49,7 +51,7 @@ export const authOptions = {
     async session({ session, token }: any) {
       session.user.email = token.email;
       session.user.name = token.name;
-      session.user.type = token.type;
+      session.user.role = token.role;
       return session;
     },
   },
