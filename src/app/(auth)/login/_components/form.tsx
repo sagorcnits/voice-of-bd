@@ -16,6 +16,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast, ToastContainer } from "react-toastify";
 import { z } from "zod";
 
 const LoginForm = () => {
@@ -42,12 +43,15 @@ const LoginForm = () => {
     });
     if (response?.ok) {
       router.push("/");
+    } else {
+      toast.error("This user does not exist");
     }
     console.log(response);
   }
 
   return (
     <Form {...form}>
+      <ToastContainer />
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}

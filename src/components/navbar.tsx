@@ -1,7 +1,15 @@
 "use client";
+import { Home, LogOut, User } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback } from "./ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 // type
 interface LinkType {
@@ -43,15 +51,38 @@ const Navbar = () => {
         ))}
       </ul>
       {session.status === "authenticated" ? (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            signOut();
-          }}
-          className="px-7"
-        >
-          Logout
-        </button>
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 p-2 text-sm font-medium">
+                <span>{session.data.user?.name}</span>
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback>A</AvatarFallback>
+                </Avatar>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 mt-1 space-y-1">
+              <DropdownMenuItem>
+                <Home className="mr-2 h-4 w-4" />
+                <span>Home</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault();
+                  signOut();
+                }}
+                className="text-red-600"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
       ) : (
         <Link href="/api/auth/signin">
           <button className="px-7">Login</button>
