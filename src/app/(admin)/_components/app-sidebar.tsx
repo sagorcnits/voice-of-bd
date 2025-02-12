@@ -52,21 +52,21 @@ const data = {
   ],
   navMain: [
     {
-      title: "Playground",
+      title: "News",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
+          title: "Create a News",
           url: "#",
         },
         {
-          title: "Starred",
+          title: "All News",
           url: "#",
         },
         {
-          title: "Settings",
+          title: "Recent News",
           url: "#",
         },
       ],
