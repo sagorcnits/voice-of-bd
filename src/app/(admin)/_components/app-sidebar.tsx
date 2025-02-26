@@ -63,7 +63,7 @@ const data = {
         },
         {
           title: "All News",
-          url: "#",
+          url: "/dashboard/news",
         },
         {
           title: "Recent News",

@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createNews } from "@/lib/api";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function CreateNewsForm() {
   const form = useForm({
@@ -29,18 +30,21 @@ export default function CreateNewsForm() {
   async function onSubmit(values: any) {
     try {
       // Here you would typically make an API call to create the news
-
       const res = await createNews(values);
-
-      console.log(values, res);
+      console.log("News created successfully:", res);
+      if (res.message) {
+        toast.success(res.message);
+      }
       form.reset();
     } catch (error) {
       console.error("Error creating news:", error);
+      toast.error("Error creating news");
     }
   }
 
   return (
     <div className="w-full max-w-2xl mx-auto">
+      <ToastContainer />
       <CardHeader>
         <CardTitle>Create News Article</CardTitle>
       </CardHeader>
