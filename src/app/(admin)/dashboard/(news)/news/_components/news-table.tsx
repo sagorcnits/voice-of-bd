@@ -9,9 +9,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getNews } from "@/lib/api";
 import { Eye, Pencil, Trash2 } from "lucide-react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
+interface Table {
+  _id: string;
+  title: string;
+  image: string;
+  content: string;
+}
 // This would typically come from your database
 const news = [
   {
@@ -38,16 +45,30 @@ const news = [
 ];
 
 export default function NewsTable() {
+  const [newsData, setNews] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      // Simulating fetch data from a server
+      const res = await getNews();
+      setNews(res);
+    }
+
+    fetchData();
+  }, []);
+
+  console.log(newsData);
+
   const truncateText = (text: string, length: number) => {
     if (text.length <= length) return text;
     return text.substring(0, length) + "...";
   };
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: string) => {
     console.log("Edit news with id:", id);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this news article?")) {
       console.log("Delete news with id:", id);
     }
@@ -62,25 +83,16 @@ export default function NewsTable() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Image</TableHead>
+              <TableHead className="w-[100px]">No</TableHead>
               <TableHead className="w-[200px]">Title</TableHead>
               <TableHead>Content</TableHead>
               <TableHead className="w-[100px] text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {news.map((article) => (
-              <TableRow key={article.id}>
-                <TableCell>
-                  <div className="relative w-[100px] h-[60px]">
-                    <Image
-                      src={article.image || "/placeholder.svg"}
-                      alt={article.title}
-                      fill
-                      className="object-cover rounded"
-                    />
-                  </div>
-                </TableCell>
+            {newsData.map((article: Table, id: number) => (
+              <TableRow key={id}>
+                <TableCell>{id + 1}</TableCell>
                 <TableCell className="font-medium">{article.title}</TableCell>
                 <TableCell>{truncateText(article.content, 100)}</TableCell>
                 <TableCell className="text-right">
@@ -88,7 +100,7 @@ export default function NewsTable() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleEdit(article.id)}
+                      onClick={() => handleEdit(article._id)}
                     >
                       <Eye className="h-4 w-4" />
                       <span className="sr-only">Edit</span>
@@ -96,7 +108,7 @@ export default function NewsTable() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleEdit(article.id)}
+                      onClick={() => handleEdit(article._id)}
                     >
                       <Pencil className="h-4 w-4" />
                       <span className="sr-only">Edit</span>
@@ -104,7 +116,7 @@ export default function NewsTable() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleDelete(article.id)}
+                      onClick={() => handleDelete(article._id)}
                       className="text-destructive hover:text-destructive"
                     >
                       <Trash2 className="h-4 w-4" />

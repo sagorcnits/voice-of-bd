@@ -14,3 +14,17 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Error saving news" }, { status: 500 });
   }
 }
+
+export async function GET() {
+  await dbConnect();
+  try {
+    const newsList = await news.find().sort({ createdAt: -1 });
+    return NextResponse.json(newsList);
+  } catch (error) {
+    console.error("Error fetching news:", error);
+    return NextResponse.json(
+      { message: "Error fetching news" },
+      { status: 500 }
+    );
+  }
+}
