@@ -59,7 +59,7 @@ const data = {
       items: [
         {
           title: "Create a News",
-          url: "#",
+          url: "/dashboard/create-news",
         },
         {
           title: "All News",

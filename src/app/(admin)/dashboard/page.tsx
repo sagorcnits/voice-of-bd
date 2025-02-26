@@ -1,5 +1,5 @@
-import { NewsChart } from "./news-chart";
-import { OverviewStats } from "./overview-states";
+import { NewsChart } from "./_components/news-chart";
+import { OverviewStats } from "./_components/overview-states";
 
 export default function Overview() {
   return (
